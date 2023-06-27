@@ -3,24 +3,42 @@ import flet as ft
 
 os.environ["FLET_WS_MAX_MESSAGE_SIZE"] = "8000000"
 
-#メイン処理
+
+# メイン処理
 def main(page: ft.Page):
+    def drag_accept(e):
+        # IDからドラッグ対象のsourceを持ってくる
+        src = page.get_control(e.src_id)
+
+        # ドラッグ側の値と色を取得→ターゲットの値と色と交換
+        tmp_src_value = src.content.content.value
+        src.content.content.value = e.control.content.content.content.value
+        tmp_src_color = src.content.bgcolor
+        src.content.bgcolor = e.control.content.content.bgcolor
+        e.control.content.content.content.value = tmp_src_value
+        e.control.content.content.bgcolor = tmp_src_color
+        page.update()
+
     for i in range(5):
         r = ft.Row(wrap=5, expand=False)
         page.add(r)
         for j in range(5):
             r.controls.append(
-                ft.Container(
-                    content=ft.Text(f"Item {i}-{j}"),
-                    width=100,
-                    height=100,
-                    alignment=ft.alignment.center,
-                    bgcolor=ft.colors.AMBER_100,
-                    border=ft.border.all(1, ft.colors.AMBER_400),
-                    border_radius=ft.border_radius.all(5),
-                    ink=True,
-                    on_click=lambda e: print(f"Item clicked!"),
-                )
+                ft.DragTarget(
+                    group="number",
+                    content=ft.Draggable(
+                        group="number",
+                        content=ft.Container(
+                            width=50,
+                            height=50,
+                            bgcolor=ft.colors.CYAN_200,
+                            border_radius=5,
+                            content=ft.Text(f"{i}-{j}", size=20),
+                            alignment=ft.alignment.center,
+                        ),
+                    ),
+                    on_accept=drag_accept,
+                ),
             )
             page.update()
 
