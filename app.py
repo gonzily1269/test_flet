@@ -40,6 +40,7 @@ def main(page: ft.Page):
                     on_accept=drag_accept,
                 ),
             )
+            # TODO:座標に応じてテキストを変更するようにしたい。
             page.update()
 
 
