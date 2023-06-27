@@ -3,7 +3,7 @@ import flet as ft
 
 os.environ["FLET_WS_MAX_MESSAGE_SIZE"] = "8000000"
 
-
+#メイン処理
 def main(page: ft.Page):
     for i in range(5):
         r = ft.Row(wrap=5, expand=False)
