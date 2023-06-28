@@ -38,6 +38,28 @@ def main(page: ft.Page):
     for i in range(5):
         r = ft.Row(wrap=5, expand=False)
         page.add(r)
+        for k in range(5):
+            if i == 0:
+                r.controls.append(
+                    ft.Draggable(
+                        group="number",
+                        content=ft.Container(
+                            width=50,
+                            height=50,
+                            bgcolor=ft.colors.PINK_200,
+                            border_radius=5,
+                            content=ft.Text(f"歩{k}", size=20),
+                        ),
+                    )
+                )
+            else:
+                r.controls.append(
+                    ft.Container(
+                        width=50,
+                        height=50,
+                    )
+                )
+
         for j in range(5):
             r.controls.append(
                 ft.DragTarget(
@@ -45,8 +67,9 @@ def main(page: ft.Page):
                     content=ft.Draggable(
                         group="number",
                         content=ft.Container(
-                            width=50,
-                            height=50,
+                            key=f"{i}-{j}",
+                            width=100,
+                            height=100,
                             bgcolor=ft.colors.CYAN_200,
                             border_radius=5,
                             content=ft.Text(f"{i}-{j}", size=20),
@@ -56,49 +79,29 @@ def main(page: ft.Page):
                     on_accept=drag_accept,
                 ),
             )
-            page.update()
-    # TODO:ここに空白を入れたい。
-    for k in range(1):
-        r = ft.Row(wrap=5, expand=False)
-        page.add(r)
-        for t in range(5):
-            if k == 0 and t == 4:
+        for m in range(5):
+            if i == 4:
                 r.controls.append(
-                    ft.DragTarget(
+                    ft.Draggable(
                         group="number",
-                        content=ft.Draggable(
-                            group="number",
-                            content=ft.Container(
-                                width=50,
-                                height=50,
-                                bgcolor=ft.colors.PINK_200,
-                                border_radius=5,
-                                content=ft.Text("歩", size=20),
-                                alignment=ft.alignment.center,
-                            ),
+                        content=ft.Container(
+                            width=50,
+                            height=50,
+                            bgcolor=ft.colors.GREEN_200,
+                            border_radius=5,
+                            content=ft.Text(f"歩{m}", size=20),
                         ),
-                        on_accept=drag_accept,
-                    ),
+                    )
                 )
             else:
                 r.controls.append(
-                    ft.DragTarget(
-                        group="number",
-                        content=ft.Draggable(
-                            group="number",
-                            content=ft.Container(
-                                width=50,
-                                height=50,
-                                bgcolor=ft.colors.CYAN_200,
-                                border_radius=5,
-                                content=ft.Text(f"{k}-{t}", size=20),
-                                alignment=ft.alignment.center,
-                            ),
-                        ),
-                        on_accept=drag_accept,
-                    ),
+                    ft.Container(
+                        width=50,
+                        height=50,
+                    )
                 )
-            page.update()
+        page.update()
+    # TODO:ここに空白を入れたい。
 
 
 ft.app(target=main)
