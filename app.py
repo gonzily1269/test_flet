@@ -101,7 +101,7 @@ def main(page: ft.Page):
                     )
                 )
         page.update()
-    # TODO:ここに空白を入れたい。
+    # TODO: keyを作る、盤上に表示させない
 
 
 ft.app(target=main)
