@@ -1,4 +1,4 @@
-# sandbox
+# main
 import os
 import flet as ft
 
