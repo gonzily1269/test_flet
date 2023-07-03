@@ -22,16 +22,36 @@ def main(page: ft.Page):
         # スタートのID取得
         src = page.get_control(e.src_id)
 
-        # 値の交換
-        tmp_src_value = src.content.content.value
-        src.content.content.value = e.control.content.content.content.value
-        e.control.content.content.content.value = tmp_src_value
+        if src.content.key in ("player-green", "player-pink"):
+            # 値の交換
+            tmp_src_value = src.content.content.value
+            src.content.content.value = e.control.content.content.content.value
+            e.control.content.content.content.value = tmp_src_value
 
-        # 色の交換
-        tmp_src_color = src.content.bgcolor
-        src.content.bgcolor = e.control.content.content.bgcolor
-        e.control.content.content.bgcolor = tmp_src_color
+            # 色の交換
+            tmp_src_color = src.content.bgcolor
+            src.content.bgcolor = e.control.content.content.bgcolor
+            e.control.content.content.bgcolor = tmp_src_color
 
+            # 座標を駒に持たせる
+            src.content.content.key = e.control.content.content.content.key
+
+            # 盤にplayer情報を持たせる
+            tmp_src_player_info = src.content.key
+            src.content.key = e.control.content.content.key
+            e.control.content.content.key = tmp_src_player_info
+
+            print(f"src.content.key:{src.content.key}")
+            print(f"src.content.content.key:{src.content.content.key}")
+            print(f"e.control.content.content.key:{e.control.content.content.key}")
+            print(
+                f"e.control.content.content.content.key:{e.control.content.content.content.key}"
+            )
+            print(
+                f"e.control.content.content.content.value:{e.control.content.content.content.value}"
+            )
+        else:
+            pass
         # アップデート
         page.update()
 
@@ -53,12 +73,12 @@ def main(page: ft.Page):
                     ft.Draggable(
                         group="number",
                         content=ft.Container(
-                            key=f"Pink-{k}",
+                            key=f"player-pink",
                             width=50,
                             height=50,
                             bgcolor=ft.colors.PINK_200,
                             border_radius=5,
-                            content=ft.Text(f"歩{k}", size=20),
+                            content=ft.Text(f"歩{k}", key="", size=20),
                         ),
                     )
                 )
@@ -77,12 +97,12 @@ def main(page: ft.Page):
                     content=ft.Draggable(
                         group="number",
                         content=ft.Container(
-                            key=f"board-{i}-{j}",
+                            key="",
                             width=100,
                             height=100,
                             bgcolor=ft.colors.CYAN_200,
                             border_radius=5,
-                            content=ft.Text(f"{i}-{j}", size=20),
+                            content=ft.Text("", key=f"{i}-{j}", size=20),
                             alignment=ft.alignment.center,
                         ),
                     ),
@@ -95,12 +115,12 @@ def main(page: ft.Page):
                     ft.Draggable(
                         group="number",
                         content=ft.Container(
-                            key=f"Green-{m}",
+                            key=f"player-green",
                             width=50,
                             height=50,
                             bgcolor=ft.colors.GREEN_200,
                             border_radius=5,
-                            content=ft.Text(f"歩{m}", size=20),
+                            content=ft.Text(f"歩{m}", key="", size=20),
                         ),
                     )
                 )
