@@ -4,9 +4,11 @@ import flet as ft
 
 os.environ["FLET_WS_MAX_MESSAGE_SIZE"] = "8000000"
 
-# TODO:スタートをゴールに
-# TODO:ゴールを定位置に
-# TODO:定位置をスタート
+# TODO:ドラックしてる時に処理できるか　ー次行ける場所を表示したい
+
+# TODO:駒があるとき交換しない　ー自分のコマ　ー交換なし
+# TODO:　　　　　　　　　　　　ー相手のコマ　ーとる処理
+
 
 """
 0=スタート
@@ -132,7 +134,6 @@ def main(page: ft.Page):
                     )
                 )
         page.update()
-    # TODO: keyを作る、盤上に表示させない
 
 
 ft.app(target=main)
