@@ -8,6 +8,12 @@ os.environ["FLET_WS_MAX_MESSAGE_SIZE"] = "8000000"
 # TODO:ゴールを定位置に
 # TODO:定位置をスタート
 
+"""
+0=スタート
+スタート=ゴール
+ゴール=0
+"""
+
 
 # メイン処理
 def main(page: ft.Page):
@@ -15,14 +21,17 @@ def main(page: ft.Page):
         # IDからドラッグ対象のsourceを持ってくる
         # スタートのID取得
         src = page.get_control(e.src_id)
+
         # 値の交換
         tmp_src_value = src.content.content.value
         src.content.content.value = e.control.content.content.content.value
         e.control.content.content.content.value = tmp_src_value
+
         # 色の交換
         tmp_src_color = src.content.bgcolor
         src.content.bgcolor = e.control.content.content.bgcolor
         e.control.content.content.bgcolor = tmp_src_color
+
         # アップデート
         page.update()
 
@@ -44,6 +53,7 @@ def main(page: ft.Page):
                     ft.Draggable(
                         group="number",
                         content=ft.Container(
+                            key=f"Pink-{k}",
                             width=50,
                             height=50,
                             bgcolor=ft.colors.PINK_200,
@@ -67,7 +77,7 @@ def main(page: ft.Page):
                     content=ft.Draggable(
                         group="number",
                         content=ft.Container(
-                            key=f"{i}-{j}",
+                            key=f"board-{i}-{j}",
                             width=100,
                             height=100,
                             bgcolor=ft.colors.CYAN_200,
@@ -85,6 +95,7 @@ def main(page: ft.Page):
                     ft.Draggable(
                         group="number",
                         content=ft.Container(
+                            key=f"Green-{m}",
                             width=50,
                             height=50,
                             bgcolor=ft.colors.GREEN_200,
