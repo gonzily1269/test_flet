@@ -1,10 +1,11 @@
 # sandbox
+
 import os
 import flet as ft
 
 os.environ["FLET_WS_MAX_MESSAGE_SIZE"] = "8000000"
 
-# TODO:ドラックしてる時に処理できるか　ー次行ける場所を表示したい
+# TODO:on_hoverで、次行ける場所を表示したい
 
 # TODO:駒があるとき交換しない　ー自分のコマ　ー交換なし
 # TODO:　　　　　　　　　　　　ー相手のコマ　ーとる処理
@@ -19,9 +20,25 @@ os.environ["FLET_WS_MAX_MESSAGE_SIZE"] = "8000000"
 
 # メイン処理
 def main(page: ft.Page):
+    # カーソルがあった駒の色をつける
+    def on_hover(e):
+        if e.data == "true" and (
+            e.control.key == "player-green" or e.control.key == "player-pink"
+        ):
+            e.control.bgcolor = "blue"
+        else:
+            if e.control.key == "player-green":
+                e.control.bgcolor = "green200"
+            elif e.control.key == "player-pink":
+                e.control.bgcolor = "pink200"
+            else:
+                e.control.bgcolor = "cyan200"
+
+        e.control.update()
+
     def drag_accept(e):
-        # IDからドラッグ対象のsourceを持ってくる
-        # スタートのID取得
+        # IDからドラッグのsourceを持ってくる
+        # ドラックのID取得
         src = page.get_control(e.src_id)
 
         if src.content.key in ("player-green", "player-pink"):
@@ -54,6 +71,7 @@ def main(page: ft.Page):
             )
         else:
             pass
+
         # アップデート
         page.update()
 
@@ -81,6 +99,7 @@ def main(page: ft.Page):
                             bgcolor=ft.colors.PINK_200,
                             border_radius=5,
                             content=ft.Text(f"歩{k}", key="", size=20),
+                            on_hover=on_hover,
                         ),
                     )
                 )
@@ -92,6 +111,7 @@ def main(page: ft.Page):
                     )
                 )
 
+        # 盤
         for j in range(5):
             r.controls.append(
                 ft.DragTarget(
@@ -106,6 +126,7 @@ def main(page: ft.Page):
                             border_radius=5,
                             content=ft.Text("", key=f"{i}-{j}", size=20),
                             alignment=ft.alignment.center,
+                            on_hover=on_hover,
                         ),
                     ),
                     on_accept=drag_accept,
@@ -123,6 +144,7 @@ def main(page: ft.Page):
                             bgcolor=ft.colors.GREEN_200,
                             border_radius=5,
                             content=ft.Text(f"歩{m}", key="", size=20),
+                            on_hover=on_hover,
                         ),
                     )
                 )
