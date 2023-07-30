@@ -14,6 +14,7 @@ class BoardPieceConfig:
             "height": 100,
             "bgcolor": ft.colors.CYAN_200,
             "border_radius": 5,
+            "on_hover": on_hover,
         }
 
         # ピンクコマの詳細
@@ -23,6 +24,7 @@ class BoardPieceConfig:
             "height": 50,
             "bgcolor": ft.colors.PINK_200,
             "border_radius": 5,
+            "on_hover": on_hover,
         }
 
         # 緑のコマの詳細
@@ -32,6 +34,7 @@ class BoardPieceConfig:
             "height": 50,
             "bgcolor": ft.colors.GREEN_200,
             "border_radius": 5,
+            "on_hover": on_hover,
         }
 
 
@@ -39,6 +42,10 @@ class BoardPieceConfig:
 def main(page: ft.Page):
     config = BoardPieceConfig()
     create_board_and_pieces(page, config)
+
+    def on_hover(e):
+        on_hover(e)
+
     # TODO:④と⑤の動きをどうやって実装する？？
 
 
@@ -108,7 +115,7 @@ def create_board_and_pieces(page: ft.Page, config: BoardPieceConfig):
 
 
 # ④交換の動き
-def drag_accept(page: ft.Page, e):
+def drag_accept(e):
     # ドラックのID取得
     src = page.get_control(e.src_id)
 
@@ -165,6 +172,6 @@ def on_hover(e):
 
 
 # 実行？
-ft.app(target=main)
 if __name__ == "__main__":
-    main()
+    page = ft.Page
+    ft.app(target=main)
